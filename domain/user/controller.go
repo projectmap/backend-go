@@ -3,7 +3,6 @@ package user
 import (
 	"clean-architecture/domain/models"
 	"clean-architecture/pkg/framework"
-	"clean-architecture/pkg/types"
 	"clean-architecture/pkg/utils"
 
 	"github.com/gin-gonic/gin"
@@ -55,10 +54,8 @@ func (u *Controller) CreateUser(c *gin.Context) {
 
 // GetOneUser gets one user
 func (u *Controller) GetUserByID(c *gin.Context) {
-	paramID := c.Param("id")
-
-	userID, err := types.ShouldParseUUID(paramID)
-	if err != nil {
+	userID := c.Param("id")
+	if userID == "" {
 		utils.HandleValidationError(u.logger, c, ErrInvalidUserID)
 		return
 	}
