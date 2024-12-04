@@ -52,6 +52,26 @@ func (u *Controller) CreateUser(c *gin.Context) {
 	c.JSON(200, gin.H{"data": "user created"})
 }
 
+//create order
+
+func (u *Controller) CreateOrder(c *gin.Context) {
+	var order models.Order
+
+	if err := c.Bind(&order); err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	// check if the order already exists
+
+	if err := u.service.CreateOrder(&order); err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{"data": "order created"})
+}
+
 // GetOneUser gets one user
 func (u *Controller) GetUserByID(c *gin.Context) {
 	userID := c.Param("id")

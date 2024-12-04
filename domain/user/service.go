@@ -27,6 +27,12 @@ func (s Service) Create(user *models.User) error {
 	return s.repository.Create(user).Error
 }
 
+//create order
+
+func (s Service) CreateOrder(product *models.Order) error {
+	return s.repository.Create(product).Error
+}
+
 // GetOneUser gets one user
 func (s Service) GetUserByID(userID string) (user models.User, err error) {
 	return user, s.repository.First(&user, "id = ?", userID).Error
