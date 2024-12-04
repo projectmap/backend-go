@@ -24,6 +24,11 @@ func Migrate(r Repository) error {
 		r.logger.Error("[Migration failed...User]")
 		return err
 	}
+	r.logger.Info("[Migrating...order]")
+	if err := r.DB.AutoMigrate(&models.Order{}); err != nil {
+		r.logger.Error("[Migration failed...order]")
+		return err
+	}
 	return nil
 }
 
