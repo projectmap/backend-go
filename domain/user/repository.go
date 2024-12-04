@@ -17,6 +17,16 @@ func NewRepository(db infrastructure.Database, logger framework.Logger) Reposito
 	return Repository{db, logger}
 }
 
+func Migrate(r Repository) error {
+	r.logger.Info("[Migrating...User]")
+
+	if err := r.DB.AutoMigrate(&models.User{}); err != nil {
+		r.logger.Error("[Migration failed...User]")
+		return err
+	}
+	return nil
+}
+
 // ExistsByEmail checks if the user exists by email
 func (r *Repository) ExistsByEmail(email string) (bool, error) {
 	r.logger.Info("[UserRepository...Exists]")
