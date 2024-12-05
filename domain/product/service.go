@@ -33,3 +33,10 @@ func (s Service) GetAllProduct() (order []ProductSerializer, err error) {
 func (s Service) CreateProduct(product *models.Product) error {
 	return s.repository.Create(product).Error
 }
+
+//get product by id
+
+func (s Service) GetProductByID(productID string) (user ProductSerializer, err error) {
+
+	return s.repository.GetProductByID(productID)
+}
