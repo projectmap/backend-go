@@ -41,3 +41,10 @@ func (r *Repository) ExistsByEmail(email string) (bool, error) {
 
 	return query.RowsAffected > 0, query.Error
 }
+
+// get all order
+func (r *Repository) GetAllOrder() (order []OrderSerializer, err error) {
+	query := r.Model(&models.Order{})
+	return order, query.Find(&order).Error
+
+}

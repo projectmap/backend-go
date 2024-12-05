@@ -38,6 +38,12 @@ func (s Service) GetUserByID(userID string) (user models.User, err error) {
 	return user, s.repository.First(&user, "id = ?", userID).Error
 }
 
+//get all order
+
+func (s Service) GetAllOrder() (order []OrderSerializer, err error) {
+	return s.repository.GetAllOrder()
+}
+
 // GetRawUserFromID gets the raw user from id
 func (r *Repository) GetRawUserFromID(userID uint) (user *models.User, err error) {
 	r.logger.Info("[UserRepository...GetRawUserFromID]")
