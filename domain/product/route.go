@@ -34,5 +34,6 @@ func RegisterRoute(r *Route) {
 	api.POST("/product", r.controller.AddProduct)
 	api.GET("/product", r.controller.GetAllProduct)
 	api.GET("/product/:id", r.controller.GetProductByID)
+	api.PATCH("/product/:id", r.controller.UpdateProduct)
 
 }
