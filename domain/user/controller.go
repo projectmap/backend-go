@@ -91,3 +91,19 @@ func (u *Controller) GetUserByID(c *gin.Context) {
 	})
 
 }
+
+//get all order
+
+func (u *Controller) GetAllOrder(c *gin.Context) {
+
+	user, err := u.service.GetAllOrder()
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": user,
+	})
+
+}
