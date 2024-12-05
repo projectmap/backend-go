@@ -67,3 +67,23 @@ func (u *Controller) AddProduct(c *gin.Context) {
 
 	c.JSON(200, gin.H{"data": "product created"})
 }
+
+// get product by id
+func (u *Controller) GetProductByID(c *gin.Context) {
+	productID := c.Param("id")
+	if productID == "" {
+		utils.HandleValidationError(u.logger, c, ErrInvalidProductID)
+		return
+	}
+
+	user, err := u.service.GetProductByID(productID)
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": user,
+	})
+
+}

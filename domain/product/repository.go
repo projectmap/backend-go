@@ -33,3 +33,11 @@ func (r *Repository) GetAllProduct() (order []ProductSerializer, err error) {
 	return order, query.Find(&order).Error
 
 }
+
+//get product by id
+
+func (r *Repository) GetProductByID(productID string) (product ProductSerializer, err error) {
+	query := r.Model(&models.Product{})
+	return product, query.First(&product, "id = ?", productID).Error
+
+}
