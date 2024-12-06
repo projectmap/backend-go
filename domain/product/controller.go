@@ -105,7 +105,7 @@ func (u *Controller) UpdateProduct(c *gin.Context) {
 		utils.HandleValidationError(u.logger, c, err)
 		return
 	}
-	if product.ProductName == "" && product.Price == 0 {
+	if product.ProductName == "" && product.Price == 0 && product.Quantity == 0 {
 		utils.HandleValidationError(u.logger, c, errors.New("update data is required"))
 		return
 	}
@@ -117,4 +117,25 @@ func (u *Controller) UpdateProduct(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"data": "product updated"})
+}
+
+//delete product
+
+func (u *Controller) DeleteProduct(c *gin.Context) {
+	productID := c.Param("id")
+	if productID == "" {
+		utils.HandleValidationError(u.logger, c, ErrInvalidProductID)
+		return
+	}
+
+	err := u.service.DeleteProduct(productID)
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": "product deleted",
+	})
+
 }

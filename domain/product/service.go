@@ -47,3 +47,10 @@ func (s Service) UpdateProduct(productID string, product ProductSerializer) (err
 
 	return s.repository.UpdateProduct(productID, product)
 }
+
+//delete product
+
+func (s Service) DeleteProduct(productID string) (err error) {
+
+	return s.repository.DeleteProduct(productID)
+}
