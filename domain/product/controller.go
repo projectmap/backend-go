@@ -4,6 +4,7 @@ import (
 	"clean-architecture/domain/models"
 	"clean-architecture/pkg/framework"
 	"clean-architecture/pkg/utils"
+	"errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -86,4 +87,34 @@ func (u *Controller) GetProductByID(c *gin.Context) {
 		"data": user,
 	})
 
+}
+
+//update product
+
+func (u *Controller) UpdateProduct(c *gin.Context) {
+
+	productID := c.Param("id")
+	if productID == "" {
+		utils.HandleValidationError(u.logger, c, errors.New("ID is required"))
+		return
+	}
+
+	var product ProductSerializer
+
+	if err := c.ShouldBindJSON(&product); err != nil {
+		utils.HandleValidationError(u.logger, c, err)
+		return
+	}
+	if product.ProductName == "" && product.Price == 0 {
+		utils.HandleValidationError(u.logger, c, errors.New("update data is required"))
+		return
+	}
+
+	err := u.service.UpdateProduct(productID, product)
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{"data": "product updated"})
 }

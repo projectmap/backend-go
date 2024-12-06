@@ -40,3 +40,10 @@ func (s Service) GetProductByID(productID string) (user ProductSerializer, err e
 
 	return s.repository.GetProductByID(productID)
 }
+
+//update product
+
+func (s Service) UpdateProduct(productID string, product ProductSerializer) (err error) {
+
+	return s.repository.UpdateProduct(productID, product)
+}

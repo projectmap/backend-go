@@ -41,3 +41,24 @@ func (r *Repository) GetProductByID(productID string) (product ProductSerializer
 	return product, query.First(&product, "id = ?", productID).Error
 
 }
+
+//update product
+
+func (r *Repository) UpdateProduct(productID string, product ProductSerializer) (err error) {
+
+	query := r.Model(&models.Product{})
+	productData := map[string]interface{}{}
+
+	// Conditionally add fields to the update data if they are not empty
+	if product.ProductName != "" {
+		productData["product_name"] = product.ProductName
+	}
+	if product.Quantity != 0 {
+		productData["quantity"] = product.Quantity
+	}
+	if product.Price != 0 {
+		productData["price"] = product.Price
+	}
+
+	return query.Where("id = ?", productID).Updates(productData).Error
+}
