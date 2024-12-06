@@ -10,8 +10,15 @@ import (
 type Order struct {
 	gorm.Model
 
-	ProductName string `json:"product_name" gorm:"size:255"`
-	Price       int16  `json:"price"`
+	Quantity int16 `json:"quantity"`
+	// Foreign keys
+
+	UserID    uint `json:"user_id"`    // Foreign key for User
+	ProductID uint `json:"product_id"` // Foreign key for Product
+
+	// Relationships
+	User    User    `json:"user" gorm:"foreignKey:UserID"`       // Belongs to User
+	Product Product `json:"product" gorm:"foreignKey:ProductID"` // Belongs to Product
 }
 
 func (*Order) TableName() string {
