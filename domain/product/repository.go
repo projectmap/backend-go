@@ -62,3 +62,13 @@ func (r *Repository) UpdateProduct(productID string, product ProductSerializer) 
 
 	return query.Where("id = ?", productID).Updates(productData).Error
 }
+
+//delete product
+
+func (r *Repository) DeleteProduct(productID string) (err error) {
+	r.logger.Info("Deleting product by id")
+
+	query := r.Model(&models.Product{})
+
+	return query.Unscoped().Where("id = ?", productID).Delete(&models.Product{}).Error
+}
