@@ -3,8 +3,11 @@ package product
 import (
 	"clean-architecture/domain/models"
 	"clean-architecture/pkg/framework"
+	"clean-architecture/pkg/responses"
 	"clean-architecture/pkg/utils"
 	"errors"
+	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -138,4 +141,44 @@ func (u *Controller) DeleteProduct(c *gin.Context) {
 		"data": "product deleted",
 	})
 
+}
+
+//get filtered product
+
+func (u *Controller) GetFilteredProduct(c *gin.Context) {
+	u.logger.Info("Listing tag")
+
+	searchQuery := utils.GetSearchQueryFromContext(c)
+	productType := c.Query("product_type")
+	maxPrice := c.Query("max_price")
+	minPrice := c.Query("min_price")
+
+	var (
+		maxPriceInt int
+		minPriceInt int
+	)
+
+	maxPriceInt, _ = strconv.Atoi(maxPrice)
+	minPriceInt, _ = strconv.Atoi(minPrice)
+	if minPrice == "" {
+		minPriceInt = 0
+	}
+	if maxPrice == "" {
+		maxPriceInt = 0
+	}
+
+	filter := ProductListFilter{
+		Search:      searchQuery,
+		ProductType: productType,
+		MaxPrice:    maxPriceInt,
+		MinPrice:    minPriceInt,
+	}
+
+	products, err := u.service.GetFilteredProduct(filter)
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	responses.JSON(c, http.StatusOK, products)
 }

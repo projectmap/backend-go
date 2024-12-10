@@ -13,6 +13,7 @@ type Product struct {
 	ProductName string `json:"product_name" gorm:"size:255"`
 	Price       int16  `json:"price"`
 	Quantity    int16  `json:"quantity"`
+	ProductType string `json:"product_type"`
 }
 
 func (*Product) TableName() string {

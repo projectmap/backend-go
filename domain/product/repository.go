@@ -72,3 +72,30 @@ func (r *Repository) DeleteProduct(productID string) (err error) {
 
 	return query.Unscoped().Where("id = ?", productID).Delete(&models.Product{}).Error
 }
+
+// get fitered product
+func (r *Repository) GetFilteredProduct(ProductListFilter ProductListFilter) (products []ProductSerializer, err error) {
+	r.logger.Info("Fetching products")
+
+	query := r.Model(&models.Product{})
+
+	if ProductListFilter.Search != "" {
+		searchPattern := "%" + ProductListFilter.Search + "%"
+		query = query.Where("product_name LIKE ? OR product_type LIKE ?", searchPattern, searchPattern)
+	}
+
+	if ProductListFilter.ProductType != "" {
+		query = query.Where("product_type = ?", ProductListFilter.ProductType)
+	}
+
+	// Price range filter
+	if ProductListFilter.MinPrice != 0 && ProductListFilter.MaxPrice != 0 {
+		query = query.Where("price BETWEEN ? AND ?", ProductListFilter.MinPrice, ProductListFilter.MaxPrice)
+	} else if ProductListFilter.MinPrice != 0 {
+		query = query.Where("price >= ?", ProductListFilter.MinPrice)
+	} else if ProductListFilter.MaxPrice != 0 {
+		query = query.Where("price <= ?", ProductListFilter.MaxPrice)
+	}
+
+	return products, query.Find(&products).Error
+}

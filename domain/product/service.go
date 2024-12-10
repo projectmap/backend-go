@@ -54,3 +54,10 @@ func (s Service) DeleteProduct(productID string) (err error) {
 
 	return s.repository.DeleteProduct(productID)
 }
+
+//get filtered product
+
+func (s Service) GetFilteredProduct(ProductListFilter ProductListFilter) (produts []ProductSerializer, err error) {
+
+	return s.repository.GetFilteredProduct(ProductListFilter)
+}
