@@ -84,3 +84,8 @@ func HandleError(logger framework.Logger, c *gin.Context, err error) {
 
 	CurrentSentryService.CaptureException(err)
 }
+
+func GetSearchQueryFromContext(ctx *gin.Context) string {
+	searchKey := ctx.Query("search")
+	return searchKey
+}

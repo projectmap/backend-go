@@ -36,5 +36,6 @@ func RegisterRoute(r *Route) {
 	api.GET("/product/:id", r.controller.GetProductByID)
 	api.PATCH("/product/:id", r.controller.UpdateProduct)
 	api.DELETE("/product/:id", r.controller.DeleteProduct)
+	api.GET("/product-filtered", r.controller.GetFilteredProduct)
 
 }
