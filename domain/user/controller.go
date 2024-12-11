@@ -92,6 +92,25 @@ func (u *Controller) GetUserByID(c *gin.Context) {
 
 }
 
+//delete order
+
+func (u *Controller) DeleteOrderByID(c *gin.Context) {
+	orderId := c.Param("id")
+	if orderId == "" {
+		utils.HandleValidationError(u.logger, c, ErrInvalidOrderID)
+		return
+	}
+
+	err := u.service.DeleteOrderByID(orderId)
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{"data": "order deleted"})
+
+}
+
 //get all order
 
 func (u *Controller) GetAllOrder(c *gin.Context) {

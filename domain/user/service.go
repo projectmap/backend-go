@@ -38,6 +38,12 @@ func (s Service) GetUserByID(userID string) (user models.User, err error) {
 	return user, s.repository.First(&user, "id = ?", userID).Error
 }
 
+//delete order
+
+func (s Service) DeleteOrderByID(orderId string) (err error) {
+	return s.repository.DeleteOrderByID(orderId)
+}
+
 //get all order
 
 func (s Service) GetAllOrder() (order []OrderSerializer, err error) {

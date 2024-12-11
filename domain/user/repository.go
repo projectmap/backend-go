@@ -48,3 +48,12 @@ func (r *Repository) GetAllOrder() (order []OrderSerializer, err error) {
 	return order, query.Find(&order).Error
 
 }
+
+// delete order
+func (r *Repository) DeleteOrderByID(orderId string) (err error) {
+	r.logger.Info("Deleting order by id")
+
+	query := r.Model(&models.Order{})
+
+	return query.Unscoped().Where("id = ?", orderId).Delete(&models.Order{}).Error
+}

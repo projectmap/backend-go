@@ -6,5 +6,6 @@ import (
 )
 
 var (
-	ErrInvalidUserID = api_errors.NewAPIError(http.StatusBadRequest, "Invalid user ID")
+	ErrInvalidUserID  = api_errors.NewAPIError(http.StatusBadRequest, "Invalid user ID")
+	ErrInvalidOrderID = api_errors.NewAPIError(http.StatusBadRequest, "Invalid order ID")
 )
