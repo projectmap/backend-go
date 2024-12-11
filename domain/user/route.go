@@ -34,6 +34,7 @@ func RegisterRoute(r *Route) {
 	api.POST("/user", r.controller.CreateUser)
 	api.POST("/order", r.controller.CreateOrder)
 	api.GET("/user/:id", r.controller.GetUserByID)
+	api.DELETE("/cancel-order/:id", r.controller.DeleteOrderByID)
 	api.GET("/order", r.controller.GetAllOrder)
 
 }
