@@ -50,6 +50,12 @@ func (s Service) GetAllOrder() (order []OrderSerializer, err error) {
 	return s.repository.GetAllOrder()
 }
 
+//get total quantity of order for product
+
+func (s Service) GetTotalOrderForProduct() (order []OrderForProductSerializer, err error) {
+	return s.repository.GetTotalOrderForProduct()
+}
+
 // GetRawUserFromID gets the raw user from id
 func (r *Repository) GetRawUserFromID(userID uint) (user *models.User, err error) {
 	r.logger.Info("[UserRepository...GetRawUserFromID]")

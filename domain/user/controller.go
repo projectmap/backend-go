@@ -126,3 +126,19 @@ func (u *Controller) GetAllOrder(c *gin.Context) {
 	})
 
 }
+
+//get order by product
+
+func (u *Controller) GetTotalOrderForProduct(c *gin.Context) {
+
+	order, err := u.service.GetTotalOrderForProduct()
+	if err != nil {
+		utils.HandleError(u.logger, c, err)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": order,
+	})
+
+}
