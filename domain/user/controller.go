@@ -4,6 +4,7 @@ import (
 	"clean-architecture/domain/models"
 	"clean-architecture/pkg/framework"
 	"clean-architecture/pkg/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -130,8 +131,23 @@ func (u *Controller) GetAllOrder(c *gin.Context) {
 //get order by product
 
 func (u *Controller) GetTotalOrderForProduct(c *gin.Context) {
+	quantityAbove := c.Query("quantity_above")
 
-	order, err := u.service.GetTotalOrderForProduct()
+	var (
+		quantityAboveInt int
+	)
+
+	quantityAboveInt, _ = strconv.Atoi(quantityAbove)
+
+	if quantityAbove == "" {
+		quantityAboveInt = 0
+	}
+
+	filter := OrderGroupListFilter{
+
+		QuantityAbove: quantityAboveInt,
+	}
+	order, err := u.service.GetTotalOrderForProduct(filter)
 	if err != nil {
 		utils.HandleError(u.logger, c, err)
 		return

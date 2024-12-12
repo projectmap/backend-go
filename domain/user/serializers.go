@@ -11,3 +11,7 @@ type OrderForProductSerializer struct {
 	ProductID     uint `json:"product_id"`
 	TotalQuantity uint `json:"total_quantity"`
 }
+
+type OrderGroupListFilter struct {
+	QuantityAbove int `json:"quantity_above"`
+}

@@ -51,8 +51,11 @@ func (r *Repository) GetAllOrder() (order []OrderSerializer, err error) {
 
 // get total qunatity for each product
 
-func (r *Repository) GetTotalOrderForProduct() (order []OrderForProductSerializer, err error) {
+func (r *Repository) GetTotalOrderForProduct(filter OrderGroupListFilter) (order []OrderForProductSerializer, err error) {
 	query := r.Model(&models.Order{}).Select("product_id, sum(quantity) as total_quantity").Group("product_id")
+	if filter.QuantityAbove != 0 {
+		query.Having("sum(quantity) > ?", filter.QuantityAbove) //filter for group
+	}
 	return order, query.Find(&order).Error
 
 }

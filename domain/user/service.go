@@ -52,8 +52,8 @@ func (s Service) GetAllOrder() (order []OrderSerializer, err error) {
 
 //get total quantity of order for product
 
-func (s Service) GetTotalOrderForProduct() (order []OrderForProductSerializer, err error) {
-	return s.repository.GetTotalOrderForProduct()
+func (s Service) GetTotalOrderForProduct(filter OrderGroupListFilter) (order []OrderForProductSerializer, err error) {
+	return s.repository.GetTotalOrderForProduct(filter)
 }
 
 // GetRawUserFromID gets the raw user from id
