@@ -115,14 +115,14 @@ func (u *Controller) DeleteOrderByID(c *gin.Context) {
 
 func (u *Controller) GetAllOrder(c *gin.Context) {
 
-	user, err := u.service.GetAllOrder()
+	order, err := u.service.GetAllOrder()
 	if err != nil {
 		utils.HandleError(u.logger, c, err)
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"data": user,
+		"data": order,
 	})
 
 }
