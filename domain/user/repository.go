@@ -49,6 +49,14 @@ func (r *Repository) GetAllOrder() (order []OrderSerializer, err error) {
 
 }
 
+// get total qunatity for each product
+
+func (r *Repository) GetTotalOrderForProduct() (order []OrderForProductSerializer, err error) {
+	query := r.Model(&models.Order{}).Select("product_id, sum(quantity) as total_quantity").Group("product_id")
+	return order, query.Find(&order).Error
+
+}
+
 // delete order
 func (r *Repository) DeleteOrderByID(orderId string) (err error) {
 	r.logger.Info("Deleting order by id")

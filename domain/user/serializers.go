@@ -6,3 +6,8 @@ type OrderSerializer struct {
 	UserID    uint  `json:"user_id"`
 	ProductID uint  `json:"product_id"`
 }
+
+type OrderForProductSerializer struct {
+	ProductID     uint `json:"product_id"`
+	TotalQuantity uint `json:"total_quantity"`
+}

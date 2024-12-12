@@ -36,5 +36,6 @@ func RegisterRoute(r *Route) {
 	api.GET("/user/:id", r.controller.GetUserByID)
 	api.DELETE("/delete-order/:id", r.controller.DeleteOrderByID)
 	api.GET("/order", r.controller.GetAllOrder)
+	api.GET("/order-by-product", r.controller.GetTotalOrderForProduct)
 
 }
