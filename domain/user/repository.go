@@ -44,7 +44,9 @@ func (r *Repository) ExistsByEmail(email string) (bool, error) {
 
 // get all order
 func (r *Repository) GetAllOrder() (order []OrderSerializer, err error) {
-	query := r.Model(&models.Order{})
+	query := r.Model(&models.Order{}).Select("orders.*, users.first_name").
+		Joins("LEFT JOIN users ON users.id = orders.user_id")
+
 	return order, query.Find(&order).Error
 
 }
